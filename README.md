@@ -6,7 +6,7 @@ The Python script harmonic_oscillator.py builds and trains a LSTM model on data 
 
 dx/dt = v
 
-dv/dt = -x
+dv/dt = -x*omega^2
 
 where x is the position of the oscillator and v is its velocity.
 
