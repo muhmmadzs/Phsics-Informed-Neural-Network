@@ -27,6 +27,9 @@ Matplotlib
 
 You can run the script using the following command:
 
-'python harmonic_oscillator.py'
+'python file_name.py'
 
 The script will train the LSTM model and then generate the animation. The animation will be displayed in a new window.
+# More Example
+
+Comming Soon .........
