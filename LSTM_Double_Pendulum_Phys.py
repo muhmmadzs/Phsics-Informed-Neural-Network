@@ -16,7 +16,7 @@ import matplotlib.animation as animation
 # Constants for the pendulum
 g = 9.81  # gravity
 L1, L2 = 1.0, 1.0  # lengths of the pendulum arms
-m1, m2 = 1.0, 1.0  # masses of the pendulum bobs
+m1, m2 = 10.0, 10.0  # masses of the pendulum bobs
 
 # Function to compute the derivatives of the state variables
 def derivatives(y, t, L1, L2, m1, m2):
@@ -55,20 +55,19 @@ class PhysicsInformedLayer(tf.keras.layers.Layer):
 
 # Define the LSTM model
 model = Sequential()
-model.add(LSTM(64, return_sequences=True, input_shape=(None, 4)))
-model.add(LSTM(64, return_sequences=True))
-model.add(LSTM(32, return_sequences=True))
-model.add(LSTM(32, return_sequences=False))  
-model.add(Dense(32,activation='relu'))  
-model.add(Dense(4))  # Make sure the output size here is 4
+model.add(LSTM(64, activation='tanh', return_sequences=True, input_shape=(None, 4)))
+model.add(LSTM(64, activation='tanh', return_sequences=True))
+model.add(LSTM(64, activation='tanh', return_sequences=True))
+model.add(LSTM(4, activation='tanh', return_sequences=False))  
 model.add(PhysicsInformedLayer())
+model.add(Dense(4))
 
 # Compile the model
-opt = tf.keras.optimizers.Adam(learning_rate=1e-4)
+opt = tf.keras.optimizers.Adam(learning_rate=1e-2)
 model.compile(optimizer=opt, loss='mse')
 
 # Train the model
-model.fit(X, Y, epochs=500)
+model.fit(X, Y, epochs=200)
 
 
 
